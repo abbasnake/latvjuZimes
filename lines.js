@@ -1,13 +1,14 @@
 /*jshint esversion: 6 */
 
 class Lines {
-    constructor(x1, y1, x2, y2, amount, area) {
+    constructor(x1, y1, x2, y2, amount, area, col) {
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
         this.y2 = y2;
         this.amount = amount;
         this.area = area;
+        this.col = col;
 
         this.cacheDom();
         this.render();
@@ -24,14 +25,16 @@ class Lines {
 
     render() {
         for(let i = 0; i<this.amount; i++){
-            let x1 = this.x1 + this.randomizeArea();
-            let y1 = this.y1 + this.randomizeArea();
-            let x2 = this.x2 + this.randomizeArea();
-            let y2 = this.y2 + this.randomizeArea();
+            const x1 = this.x1 + this.randomizeArea();
+            const y1 = this.y1 + this.randomizeArea();
+            const x2 = this.x2 + this.randomizeArea();
+            const y2 = this.y2 + this.randomizeArea();
             this.ctx.beginPath();
             this.ctx.moveTo(x1, y1);
             this.ctx.lineTo(x2,y2);
+            this.ctx.strokeStyle = this.col;
             this.ctx.stroke();
+            this.ctx.closePath();
         }
     }
 } // class Lines end
@@ -39,10 +42,11 @@ class Lines {
 //***********************************************************************
 
 class Simbol {
-    constructor(name, amount, area) {
+    constructor(name, amount = 55, area = 55, col = "rgb(100, 0, 0)") {
         this.name = name;
         this.amount = amount;
         this.area = area;
+        this.col = col;
 
         this.cacheDom();
         this.render();
@@ -60,7 +64,7 @@ class Simbol {
         const ch = this.canvas.height/2; // center height
         const wu = this.canvas.width/20; // width divided in 20 units
         const hu = this.canvas.height/10; // height divided in 10 units
-        const line = new Lines(cw + (wu*x1), ch + (hu*y1), cw + (wu*x2), ch + (hu*y2), this.amount, this.area);
+        const line = new Lines(cw + (wu*x1), ch + (hu*y1), cw + (wu*x2), ch + (hu*y2), this.amount, this.area, this.col);
     }
 
     // dictionary (object) of all the simbols
@@ -317,7 +321,7 @@ class Simbol {
 
 //************************************************************************
 
-const s1 = new Simbol("usins", 22, 10);
+const s1 = new Simbol("zalktis2");
 // const s2 = new Simbol("marasL", 10, 10);
 
 // setInterval(() => {
