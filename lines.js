@@ -24,6 +24,12 @@ class Simbol{
         this.green = 0;
         this.blue = 0;
         this.isColRandom = true;
+
+        this.lineWidth = 1;
+
+        this.bgRed = 255;
+        this.bgGreen = 255;
+        this.bgBlue = 255;
     }
 
     setBasicUnits() {
@@ -58,6 +64,23 @@ class Simbol{
         return `rgb(${r}, ${g}, ${b}`;
     }
 
+    setLineWidth(w) {
+        this.lineWidth = w;
+        this.render();
+    }
+
+    setBackground(r, g, b) {
+        this.bgRed = r;
+        this.bgGreen = g;
+        this.bgBlue = b;
+        this.render();
+    }
+
+    renderBackground() {
+        this.ctx.fillStyle = `rgb(${this.bgRed}, ${this.bgGreen}, ${this.bgBlue})`;
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+
     randomizeArea() {
         return (Math.random() * this.area) - (Math.random() * this.area); 
     }
@@ -76,6 +99,7 @@ class Simbol{
             this.ctx.beginPath();
             this.ctx.moveTo(xx1, yy1);
             this.ctx.lineTo(xx2,yy2);
+            this.ctx.lineWidth = this.lineWidth;
             this.ctx.strokeStyle = this.renderColor();
             this.ctx.stroke();
             this.ctx.closePath();
@@ -331,6 +355,7 @@ class Simbol{
 
     render() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); //clear canvas
+        this.renderBackground();
         this.chooseSimbol(this.name);
     }
 } // class Simbol end
