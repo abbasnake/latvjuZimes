@@ -16,6 +16,13 @@ class Simbol{
         this.ctx = this.canvas.getContext("2d");
     }
 
+    setBasicUnits() {
+        this.centerWidth = this.canvas.width/2; // center width
+        this.centerHeight = this.canvas.height/2; // center height
+        this.widthUnit = this.canvas.width/20; // width divided in 20 units
+        this.heightUnit = this.canvas.height/10; // height divided in 10 units
+    }
+
     setDefaultVariables() {
         this.amount = 55;
         this.area = 55;
@@ -32,11 +39,14 @@ class Simbol{
         this.bgBlue = 255;
     }
 
-    setBasicUnits() {
-        this.centerWidth = this.canvas.width/2; // center width
-        this.centerHeight = this.canvas.height/2; // center height
-        this.widthUnit = this.canvas.width/20; // width divided in 20 units
-        this.heightUnit = this.canvas.height/10; // height divided in 10 units
+    setAmount(a) {
+        this.amount = a;
+        this.render();
+    }
+
+    setArea(a) {
+        this.area = a;
+        this.render();
     }
 
     setColor(r, g, b) {
@@ -107,7 +117,7 @@ class Simbol{
     }
 
     // dictionary (object) of all the simbols
-    chooseSimbol(name) {
+    renderSimbol(name) {
         const dictionary = {
             dievs1: () => {
                 this.renderLines(0, -3, -5, 2);
@@ -348,7 +358,7 @@ class Simbol{
         dictionary[name](); // it turns out you can call object functions this way, just adding the "()" at the end
     }
 
-    // for animations
+    // for animations later in life
     rerender() {
         this.render();
     }
@@ -356,14 +366,14 @@ class Simbol{
     render() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); //clear canvas
         this.renderBackground();
-        this.chooseSimbol(this.name);
+        this.renderSimbol(this.name);
     }
 } // class Simbol end
 
 //************************************************************************
 
 const s1 = new Simbol("zalktis2");
-// const s2 = new Simbol("marasL", 10, 10);
+// const s2 = new Simbol("marasL");
 
 // setInterval(() => {
 //     s1.rerender();
